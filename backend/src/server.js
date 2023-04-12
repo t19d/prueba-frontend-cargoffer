@@ -1,10 +1,8 @@
-const express = require('express');
+require('./database/mongodb');
 
+const express = require('express');
 const app = express();
 const PORT = 3000;
-
-// Importamos la conexión a la base de datos
-require('./database/mongodb');
 
 // #region Middlewares
 app.use(express.json());
@@ -12,10 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 // #endregion
 
 // #region Products
-
-// Definimos nuestras rutas
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
+// #endregion
+
+// #region Users
+const usersRouter = require('./routes/users');
+app.use('/users', usersRouter);
 // #endregion
 
 app.listen(PORT, (error) => {
