@@ -1,8 +1,46 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Product = require('../models/product');
 const data = require('../example/fake-data');
+
+/**
+ * Authentication middleware
+ *
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @param {function} next - Express next middleware function
+ * @returns {undefined}
+ * @throws {Error} - If token is missing or invalid
+ * @description This middleware function verifies the access token received in the Authorization header of the request,
+ * and stores the user information contained in the token in the request object for further use in subsequent middleware or routes.
+ */
+const authMiddleware = (req, res, next) => {
+    // Get token from request header
+    const token = req.header('Authorization').replace('Bearer ', '');
+
+    // Check if token exists
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        // Verify token with secret key
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+        // Store user information in request
+        req.user = decoded;
+
+        // Continue with the next middleware function
+        next();
+    } catch (err) {
+        // Handle invalid token error
+        res.status(401).json({ error: 'Unauthorized' });
+    }
+};
 
 // #region GET
 
@@ -14,7 +52,7 @@ const data = require('../example/fake-data');
  * @returns {Array.<Product>} 200 - An array of all products
  * @returns {Error} 500 - Internal server error
  */
-router.get('/', async (req, res, next) => {
+router.get('/', authMiddleware, async (req, res, next) => {
     try {
         const products = await Product.find({});
         res.json(products);
@@ -34,7 +72,7 @@ router.get('/', async (req, res, next) => {
  * @returns {Error} 404 - Product not found
  * @returns {Error} 500 - Internal server error
  */
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authMiddleware, async (req, res, next) => {
     const id = req.params.id;
 
     // Validate the product ID
@@ -74,7 +112,7 @@ router.get('/:id', async (req, res, next) => {
  * @returns {Error} 400 - Invalid ID provided
  * @returns {Error} 500 - Internal server error
  */
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authMiddleware, async (req, res, next) => {
     const id = req.params.id;
 
     // Check if ID is a valid MongoDB ObjectId
@@ -122,7 +160,7 @@ router.put('/:id', async (req, res, next) => {
  * @returns {Error} 400 - Invalid or missing product fields
  * @returns {Error} 500 - Internal server error
  */
-router.post('/', async (req, res, next) => {
+router.post('/', authMiddleware, async (req, res, next) => {
     try {
         const productData = req.body;
         const newProduct = new Product(productData);
@@ -150,7 +188,7 @@ router.post('/', async (req, res, next) => {
  * @returns {Array.<Product>} 200 The created products.
  * @returns {Error} 500 - If something goes wrong during the database operation.
  */
-router.post('/seed-fake-data', async (req, res, next) => {
+router.post('/seed-fake-data', authMiddleware, async (req, res, next) => {
     try {
         // Delete all existing products
         await Product.deleteMany({});

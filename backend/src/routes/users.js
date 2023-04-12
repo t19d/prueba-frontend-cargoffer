@@ -7,6 +7,44 @@ const router = express.Router();
 const User = require('../models/user');
 
 /**
+ * Middleware to verify if the authenticated user is an admin.
+ *
+ * @function
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function} next - Express next middleware function.
+ * @throws {401} - Unauthorized error if the token is not provided or is invalid.
+ * @throws {403} - Forbidden error if the authenticated user is not an admin.
+ */
+const adminMiddleware = async (req, res, next) => {
+    // Get token from request header
+    const token = req.header('Authorization').replace('Bearer ', '');
+
+    // Check if token exists
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        // Verify token with secret key
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+        // Find user by decoded user ID and check if they are an admin
+        const isAdmin = (await User.findOne({ _id: decoded.userId })).isAdmin;
+        if (!isAdmin) return res.status(403).json({ error: 'Forbidden' });
+
+        // Store user information in request
+        req.user = user;
+
+        // Continue with the next middleware function
+        next();
+    } catch (err) {
+        // Handle invalid token error
+        res.status(401).json({ error: 'Unauthorized' });
+    }
+};
+
+/**
  * Log in a user
  *
  * @route POST /api/users/login
@@ -62,7 +100,7 @@ router.post('/login', async (req, res, next) => {
  * @returns {Error} 400 - Invalid or missing user fields
  * @returns {Error} 500 - Internal server error
  */
-router.post('/', async (req, res, next) => {
+router.post('/', adminMiddleware, async (req, res, next) => {
     try {
         const userData = req.body;
 
@@ -94,7 +132,7 @@ router.post('/', async (req, res, next) => {
  * @returns {Error} 404 - User not found
  * @returns {Error} 500 - Internal server error
  */
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', adminMiddleware, async (req, res, next) => {
     try {
         const { id } = req.params;
         const userData = req.body;
@@ -121,22 +159,23 @@ router.put('/:id', async (req, res, next) => {
 /**
  * Delete a user
  *
- * @route DELETE /api/users/:id
+ * @route DELETE /api/users/:username
  * @group Users - Operations about user
- * @param {string} id.path.required - The ID of the user to be deleted
+ * @param {string} username.path.required - The username of the user to be deleted
  * @returns {object} 204 - No content
  * @returns {Error} 404 - User not found
  * @returns {Error} 500 - Internal server error
  */
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:username', adminMiddleware, async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { username } = req.params;
 
-        const deletedUser = await User.findByIdAndDelete(id);
+        const deletedUser = await User.findOneAndDelete({ username });
 
         if (!deletedUser) {
             return res.status(404).json({ error: 'User not found' });
         }
+
         res.sendStatus(204);
     } catch (err) {
         res.status(500).json({ error: err.message });
