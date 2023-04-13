@@ -1,15 +1,16 @@
-<div class="product-list">
-    <div class="product" *ngFor="let product of products">
+<div class="product-grid">
+    <div
+        class="product-card"
+        *ngFor="let product of products"
+        (click)="goToProductDetails(product._id)"
+        routerLinkActive="active"
+    >
         <img
+            class="product-image"
             [src]="product.image"
             alt="{{ product.name }}"
-            class="product-image"
         />
-        <h2 class="product-name">{{ product.name }}</h2>
-        <p class="product-description">{{ product.description }}</p>
+        <div class="product-name">{{ product.name }}</div>
         <div class="product-price">{{ product.price | currency }}</div>
-        <!-- <button class="add-to-cart-button" (click)="addToCart(product)">
-            Add to cart
-        </button> -->
     </div>
 </div>
