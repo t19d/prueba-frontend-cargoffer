@@ -54,7 +54,9 @@ const authMiddleware = (req, res, next) => {
  */
 router.get('/', async (req, res, next) => {
     try {
-        const products = await Product.find({});
+        const name = req.query.name;
+        const query = name ? { name: { $regex: name, $options: 'i' } } : {};
+        const products = await Product.find(query);
         res.json(products);
     } catch (err) {
         res.status(500).json({ error: err.message });
