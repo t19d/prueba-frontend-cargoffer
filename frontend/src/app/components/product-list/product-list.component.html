@@ -1,1 +1,15 @@
-<p>product-list works!</p>
+<div class="product-list">
+    <div class="product" *ngFor="let product of products">
+        <img
+            [src]="product.image"
+            alt="{{ product.name }}"
+            class="product-image"
+        />
+        <h2 class="product-name">{{ product.name }}</h2>
+        <p class="product-description">{{ product.description }}</p>
+        <div class="product-price">{{ product.price | currency }}</div>
+        <!-- <button class="add-to-cart-button" (click)="addToCart(product)">
+            Add to cart
+        </button> -->
+    </div>
+</div>
