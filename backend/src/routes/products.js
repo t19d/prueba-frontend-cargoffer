@@ -203,6 +203,46 @@ router.post('/seed-fake-data', authMiddleware, async (req, res, next) => {
 
 // #endregion
 
+// #region DELETE
+
+/**
+ * Delete a product by ID
+ *
+ * @route DELETE /api/products/:id
+ * @group Products - Operations about product
+ * @param {string} id.path.required - Product ID
+ * @returns {Object} 200 - Deleted product
+ * @returns {Error} 400 - Invalid ID provided
+ * @returns {Error} 404 - Product not found
+ * @returns {Error} 500 - Internal server error
+ */
+router.delete('/:id', authMiddleware, async (req, res, next) => {
+    const id = req.params.id;
+
+    // Check if ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            error: 'The provided ID is not valid'
+        });
+    }
+
+    try {
+        const product = await Product.findByIdAndDelete(id);
+
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        res.json(product);
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
+// #endregion
+
 /**
  * Middleware function to handle errors
  *
