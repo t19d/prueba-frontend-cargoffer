@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-form',
@@ -13,7 +15,11 @@ export class ProductFormComponent {
 
   productForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private router: Router,
+    private productService: ProductService,
+    private fb: FormBuilder
+  ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -56,5 +62,16 @@ export class ProductFormComponent {
 
   disableEditMode() {
     this.onCancel.emit();
+  }
+
+  deleteProduct(): void {
+    if (!this.product) return;
+
+    this.productService.deleteProduct(this.product._id ?? '')?.subscribe(
+      () => {
+        console.log('Product deleted');
+        this.router.navigate(['/products']);
+      }
+    );
   }
 }

@@ -46,4 +46,5 @@
 
     <button (click)="saveChanges()">Save</button>
     <button (click)="disableEditMode()">Cancel</button>
+    <button *ngIf="product" (click)="deleteProduct()">Delete</button>
 </form>
