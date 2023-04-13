@@ -1,0 +1,103 @@
+<div class="product-create-container">
+    <h2>Create Product</h2>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                required
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea
+                class="form-control"
+                formControlName="description"
+                required
+            ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input
+                type="number"
+                class="form-control"
+                formControlName="price"
+                required
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="image"
+                aria-label="image"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="category"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="size">Size:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="size"
+                aria-label="size"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="color">Color:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="color"
+                aria-label="color"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="material">Material:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="material"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="brand">Brand:</label>
+            <input
+                type="text"
+                class="form-control"
+                formControlName="brand"
+                aria-label="brand"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input
+                type="number"
+                class="form-control"
+                formControlName="stock"
+                aria-label="stock"
+            />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
