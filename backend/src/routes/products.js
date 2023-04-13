@@ -52,7 +52,7 @@ const authMiddleware = (req, res, next) => {
  * @returns {Array.<Product>} 200 - An array of all products
  * @returns {Error} 500 - Internal server error
  */
-router.get('/', authMiddleware, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const products = await Product.find({});
         res.json(products);
@@ -72,7 +72,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
  * @returns {Error} 404 - Product not found
  * @returns {Error} 500 - Internal server error
  */
-router.get('/:id', authMiddleware, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const id = req.params.id;
 
     // Validate the product ID
