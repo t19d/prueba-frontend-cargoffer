@@ -45,4 +45,9 @@ export class ProductService {
     const url = `${this.baseUrl}/${id}`;
     return this.http.delete<Product>(url, { headers });
   }
+
+  searchProducts(searchTerm: string): Observable<Product[]> {
+    const url = `${this.baseUrl}?name=${searchTerm}`;
+    return this.http.get<Product[]>(url);
+  }
 }
