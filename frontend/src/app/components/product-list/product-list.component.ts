@@ -10,18 +10,33 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  searchTerm: string = '';
 
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((data: Product[]) => {
-      this.products = data;
-    });
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    if (this.searchTerm) {
+      this.productService.searchProducts(this.searchTerm).subscribe((data: Product[]) => {
+        this.products = data;
+      });
+    } else {
+      this.productService.getProducts().subscribe((data: Product[]) => {
+        this.products = data;
+      });
+    }
   }
 
   goToProductDetails(productId: string | null | undefined) {
     if (!productId) return;
     this.router.navigate(['/products', productId]);
+  }
+
+  searchProducts(): void {
+    this.getProducts();
   }
 
 }

@@ -1,3 +1,14 @@
+<div class="search-container">
+    <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Search"
+        aria-label="Search product"
+        (keyup.enter)="searchProducts()"
+    />
+    <button (click)="searchProducts()">Search</button>
+</div>
+
 <div class="product-grid">
     <div
         class="product-card"
