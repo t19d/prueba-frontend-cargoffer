@@ -6,11 +6,12 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductCreateComponent } from './components/product-create/product-create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'products', component: ProductListComponent },
-  { path: 'product-form', component: ProductFormComponent, canActivate: [AuthGuard] },
+  { path: 'products/create', component: ProductCreateComponent, canActivate: [AuthGuard] },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'login', component: LoginComponent }
 ];
