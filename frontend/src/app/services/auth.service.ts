@@ -38,11 +38,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedInUser !== null;
-  }
-
-  getLoggedInUser(): string | null {
-    return this.loggedInUser;
+    return (this.loggedInUser !== null || this.getToken() !== null);
   }
 
   getToken(): string | null {
