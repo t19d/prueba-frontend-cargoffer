@@ -44,4 +44,9 @@ export class AuthService {
   getLoggedInUser(): string | null {
     return this.loggedInUser;
   }
+
+  getToken(): string | null {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    return currentUser.token || null;
+  }
 }
