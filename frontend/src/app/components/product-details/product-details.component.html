@@ -1,1 +1,22 @@
-<p>product-details works!</p>
+<h1>{{ product?.name }}</h1>
+
+<div *ngIf="product && !editMode">
+    <img [src]="product.image" alt="{{ product.name }} image" />
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price | currency }}</p>
+    <p>Category: {{ product.category }}</p>
+    <p>Size: {{ product.size }}</p>
+    <p>Color: {{ product.color }}</p>
+    <p>Material: {{ product.material }}</p>
+    <p>Brand: {{ product.brand }}</p>
+    <p>Stock: {{ product.stock }}</p>
+    <button (click)="enableEditMode()">Edit</button>
+</div>
+
+<div *ngIf="product && editMode">
+    <app-product-form
+        [product]="product"
+        (onSave)="saveChanges($event)"
+        (onCancel)="disableEditMode()"
+    ></app-product-form>
+</div>
