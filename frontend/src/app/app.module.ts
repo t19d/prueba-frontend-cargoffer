@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductCreateComponent } from './components/product-create/product-create.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProductCreateComponent } from './components/product-create/product-crea
     ProductListComponent,
     ProductDetailsComponent,
     LoginComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,

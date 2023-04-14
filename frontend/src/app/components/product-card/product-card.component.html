@@ -1,0 +1,30 @@
+<article
+    class="product-card"
+    *ngIf="product"
+    (click)="goToProductDetails(product._id)"
+    routerLinkActive="active"
+    tabindex="0"
+    aria-labelledby="product-name"
+    aria-describedby="product-description"
+>
+    <img
+        class="image"
+        [src]="product.image"
+        alt="{{ product.name }}"
+        aria-labelledby="product-name"
+        aria-describedby="product-description product-price product-stock"
+    />
+    <div class="details">
+        <div class="name" id="product-name">{{ product.name }}</div>
+        <div class="price" id="product-price">
+            {{ product.price | currency }}
+        </div>
+        <div
+            class="stock"
+            *ngIf="product.stock !== undefined"
+            id="product-stock"
+        >
+            {{ product.stock }} in stock
+        </div>
+    </div>
+</article>
