@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { sanitizeProduct } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-form',
@@ -20,7 +22,8 @@ export class ProductFormComponent {
   constructor(
     private router: Router,
     private productService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -63,7 +66,8 @@ export class ProductFormComponent {
       return;
     }
 
-    const updatedProduct = { ...this.product, ...this.productForm.value };
+    const sanitizedProduct = sanitizeProduct(this.sanitizer, this.productForm.value);
+    const updatedProduct = { ...this.product, ...sanitizedProduct };
     this.onSave.emit(updatedProduct);
   }
 
