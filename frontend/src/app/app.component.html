@@ -20,7 +20,7 @@
             </li>
             <li *ngIf="isLoggedIn$ | async; else loginLink">
                 <button
-                    class="logout"
+                    class="btn-danger"
                     (click)="onLogout()"
                     aria-label="Logout"
                     tabindex="0"
@@ -32,6 +32,7 @@
             <ng-template #loginLink>
                 <li>
                     <button
+                        class="btn-primary"
                         routerLink="/login"
                         routerLinkActive="active"
                         aria-label="Go to Login page"

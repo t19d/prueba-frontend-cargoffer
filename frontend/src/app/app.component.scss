@@ -1,3 +1,5 @@
+@import 'global.scss';
+
 header {
     background-color: #333;
     color: white;
@@ -36,33 +38,6 @@ header {
                         text-decoration: underline;
                     }
                 }
-
-                & > button {
-                    background-color: transparent;
-                    color: white;
-                    border: 1px solid white;
-                    border-radius: 5px;
-                    padding: 0.5rem 1.5rem;
-                    cursor: pointer;
-                    transition: all 0.3s;
-
-                    &:hover {
-                        background-color: white;
-                        color: #333;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                        border-color: transparent;
-                    }
-
-                    &.logout {
-                        background-color: white;
-                        color: #333;
-
-                        &:hover {
-                            background-color: #ff0000;
-                            color: white;
-                        }
-                    }
-                }
             }
         }
     }
@@ -70,6 +45,7 @@ header {
 
 main {
     flex: 1;
+    padding-inline: 2vw;
 }
 
 footer {

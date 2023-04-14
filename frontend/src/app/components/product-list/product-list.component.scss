@@ -1,3 +1,5 @@
+@import 'global.scss';
+
 .search-container {
     display: flex;
     justify-content: center;
@@ -16,33 +18,6 @@
         &:focus {
             outline: none;
             box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
-        }
-    }
-
-    button {
-        margin-right: 1rem;
-        font-size: 1.2rem;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        border: none;
-        padding: 0.5rem 1rem;
-
-        &:last-child {
-            margin-right: 0;
-        }
-
-        &:hover {
-            opacity: 0.8;
-        }
-
-        &.btn-primary {
-            background-color: #8c4bff;
-            color: #fff;
-
-            &:hover {
-                background-color: #7239d9;
-            }
         }
     }
 }

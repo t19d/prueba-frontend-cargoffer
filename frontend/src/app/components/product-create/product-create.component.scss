@@ -1,11 +1,8 @@
+@import 'global.scss';
+
 :host {
     display: flex;
     max-width: 50%;
     margin: auto;
     flex-direction: column;
-
-    h1 {
-        font-size: 2rem;
-        text-align: center;
-    }
 }

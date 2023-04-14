@@ -1,13 +1,10 @@
+@import 'global.scss';
+
 :host {
     display: flex;
     max-width: 50%;
     margin: auto;
     flex-direction: column;
-
-    h1 {
-        font-size: 2rem;
-        text-align: center;
-    }
 
     form {
         display: flex;
@@ -16,55 +13,15 @@
         & > .form-group {
             margin-block: 0.25rem;
 
+            &:last-of-type {
+                margin-bottom: 1.5rem;
+            }
+
             label {
                 display: block;
                 font-size: 1.2rem;
                 margin-block: 0.5rem;
             }
-
-            input[type='text'],
-            input[type='password'] {
-                display: block;
-                min-width: 100%;
-                padding: 0.5rem;
-                font-size: 1.2rem;
-                border-radius: 0.25rem;
-                border: 2px solid #ccc;
-                transition: all 0.3s;
-                box-sizing: border-box;
-
-                &:focus {
-                    outline: none;
-                    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
-                }
-            }
         }
-
-        & > button[type='submit'] {
-            margin-block: 1.5rem;
-            background-color: #8c4bff;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            font-size: 1.2rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-
-            &:hover {
-                background-color: #7239d9;
-            }
-        }
-    }
-
-    & > .error-message {
-        text-align: center;
-        background-color: #ffebee;
-        color: #c62828;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.25rem;
-        margin-top: 1rem;
-        font-size: 1.2rem;
-        border: 2px solid #c62828;
     }
 }
