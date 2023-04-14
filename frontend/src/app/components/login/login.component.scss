@@ -25,3 +25,22 @@
         }
     }
 }
+
+@media only screen and (max-width: 768px) {
+    :host {
+        max-width: 90%;
+    }
+
+    form {
+        width: 100%;
+
+        & > .form-group {
+            margin: 0.5rem 0;
+
+            label {
+                font-size: 1rem;
+                margin-bottom: 0.25rem;
+            }
+        }
+    }
+}

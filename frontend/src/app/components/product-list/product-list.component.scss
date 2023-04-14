@@ -29,3 +29,34 @@
     padding: 0;
     margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+    .search-container {
+        input[type='text'] {
+            min-width: unset;
+            width: 100%;
+        }
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .product-form {
+        .form-group {
+            label {
+                font-size: 1rem;
+            }
+        }
+
+        .form-actions {
+            flex-direction: column;
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+    }
+}

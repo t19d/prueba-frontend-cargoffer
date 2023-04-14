@@ -5,4 +5,8 @@
     max-width: 50%;
     margin: auto;
     flex-direction: column;
+
+    @media screen and (max-width: 768px) {
+        max-width: 100%;
+    }
 }
