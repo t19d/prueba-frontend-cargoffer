@@ -11,7 +11,9 @@ export class AuthService {
 
   private loggedInUser$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.checkLoggedInStatus();
+  }
 
   login(username: string, password: string): Observable<boolean> {
 
@@ -45,4 +47,12 @@ export class AuthService {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     return currentUser.token || null;
   }
+
+  checkLoggedInStatus() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser && currentUser.token) {
+      this.loggedInUser$.next(true);
+    }
+  }
+
 }
