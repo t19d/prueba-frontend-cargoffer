@@ -1,7 +1,7 @@
-<h2>Iniciar sesión</h2>
-<form (ngSubmit)="login()">
+<h1>Login</h1>
+<form (ngSubmit)="login()" aria-label="Login form">
     <div class="form-group">
-        <label for="username">Nombre de usuario:</label>
+        <label for="username" id="username-label">Username:</label>
         <input
             type="text"
             class="form-control"
@@ -9,10 +9,13 @@
             [(ngModel)]="username"
             name="username"
             required
+            autocomplete="username"
+            aria-labelledby="username-label"
+            aria-describedby="username-error"
         />
     </div>
     <div class="form-group">
-        <label for="password">Contraseña:</label>
+        <label for="password" id="password-label">Password:</label>
         <input
             type="password"
             class="form-control"
@@ -20,7 +23,26 @@
             [(ngModel)]="password"
             name="password"
             required
+            aria-labelledby="password-label"
+            aria-describedby="password-error"
         />
     </div>
-    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    <button
+        type="submit"
+        class="btn btn-primary"
+        aria-label="Submit"
+        tabindex="0"
+    >
+        Login
+    </button>
 </form>
+<div
+    id="username-error password-error"
+    class="error-message"
+    aria-live="assertive"
+    role="alert"
+    tabindex="0"
+    *ngIf="errorMessage"
+>
+    {{ errorMessage }}
+</div>
