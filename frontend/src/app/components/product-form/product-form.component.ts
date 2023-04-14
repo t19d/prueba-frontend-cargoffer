@@ -7,6 +7,7 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
+  styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent {
   @Input() product: Product | undefined;
@@ -14,6 +15,7 @@ export class ProductFormComponent {
   @Output() onCancel = new EventEmitter<void>();
 
   productForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -56,6 +58,11 @@ export class ProductFormComponent {
   }
 
   saveChanges() {
+    if (this.productForm.invalid) {
+      this.errorMessage = 'Please fill out all required fields.';
+      return;
+    }
+
     const updatedProduct = { ...this.product, ...this.productForm.value };
     this.onSave.emit(updatedProduct);
   }

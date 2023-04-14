@@ -1,50 +1,126 @@
-<form [formGroup]="productForm">
-    <div>
-        <label>Name:</label>
-        <input type="text" formControlName="name" aria-label="Name" />
+<form [formGroup]="productForm" aria-label="Product Form" class="product-form">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+            type="text"
+            formControlName="name"
+            id="name"
+            aria-label="Name"
+            required
+        />
     </div>
-    <div>
-        <label>Description:</label>
+    <div class="form-group">
+        <label for="description">Description:</label>
         <input
             type="text"
             formControlName="description"
+            id="description"
             aria-label="Description"
+            required
         />
     </div>
-    <div>
-        <label>Price:</label>
-        <input type="number" formControlName="price" aria-label="Price" />
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input
+            type="number"
+            formControlName="price"
+            id="price"
+            aria-label="Price"
+            required
+        />
     </div>
-    <div>
-        <label>Image:</label>
-        <input type="text" formControlName="image" aria-label="Image" />
+    <div class="form-group">
+        <label for="image">Image:</label>
+        <input
+            type="text"
+            formControlName="image"
+            id="image"
+            aria-label="Image"
+        />
     </div>
-    <div>
-        <label>Category:</label>
-        <input type="text" formControlName="category" aria-label="Category" />
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <input
+            type="text"
+            formControlName="category"
+            id="category"
+            aria-label="Category"
+        />
     </div>
-    <div>
-        <label>Size:</label>
-        <input type="text" formControlName="size" aria-label="Size" />
+    <div class="form-group">
+        <label for="size">Size:</label>
+        <input type="text" formControlName="size" id="size" aria-label="Size" />
     </div>
-    <div>
-        <label>Color:</label>
-        <input type="text" formControlName="color" aria-label="Color" />
+    <div class="form-group">
+        <label for="color">Color:</label>
+        <input
+            type="text"
+            formControlName="color"
+            id="color"
+            aria-label="Color"
+        />
     </div>
-    <div>
-        <label>Material:</label>
-        <input type="text" formControlName="material" aria-label="Material" />
+    <div class="form-group">
+        <label for="material">Material:</label>
+        <input
+            type="text"
+            formControlName="material"
+            id="material"
+            aria-label="Material"
+        />
     </div>
-    <div>
-        <label>Brand:</label>
-        <input type="text" formControlName="brand" aria-label="Brand" />
+    <div class="form-group">
+        <label for="brand">Brand:</label>
+        <input
+            type="text"
+            formControlName="brand"
+            id="brand"
+            aria-label="Brand"
+        />
     </div>
-    <div>
-        <label>Stock:</label>
-        <input type="number" formControlName="stock" aria-label="Stock" />
+    <div class="form-group">
+        <label for="stock">Stock:</label>
+        <input
+            type="number"
+            formControlName="stock"
+            id="stock"
+            aria-label="Stock"
+        />
     </div>
-
-    <button (click)="saveChanges()">Save</button>
-    <button (click)="disableEditMode()">Cancel</button>
-    <button *ngIf="product" (click)="deleteProduct()">Delete</button>
+    <div class="form-actions">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            aria-label="Cancel changes"
+            (click)="disableEditMode()"
+        >
+            Cancel
+        </button>
+        <button
+            *ngIf="product"
+            type="button"
+            class="btn btn-danger"
+            aria-label="Delete product"
+            (click)="deleteProduct()"
+        >
+            Delete
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            aria-label="Save product"
+            (click)="saveChanges()"
+        >
+            Save
+        </button>
+    </div>
 </form>
+
+<div
+    *ngIf="errorMessage"
+    class="error-message"
+    aria-live="assertive"
+    role="alert"
+>
+    {{ errorMessage }}
+</div>

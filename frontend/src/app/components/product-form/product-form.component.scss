@@ -1,43 +1,96 @@
 .product-form {
     display: flex;
-    flex-direction: column;
-    max-width: 600px;
     margin: auto;
+    flex-direction: column;
 
-    h2 {
-        margin-bottom: 1rem;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
+    .form-group {
+        margin: 0.25rem 0;
 
         label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
         }
 
-        input,
-        select {
-            margin-bottom: 1rem;
+        input[type='text'],
+        input[type='password'],
+        input[type='number'] {
+            display: block;
+            min-width: 100%;
             padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
+            font-size: 1.2rem;
+            border-radius: 0.25rem;
+            border: 2px solid #ccc;
+            transition: all 0.3s;
+            box-sizing: border-box;
 
-        button[type='submit'] {
-            background-color: #0062cc;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 0.5rem;
-            font-size: 1rem;
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+            }
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+
+        button {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            border-radius: 0.25rem;
             cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            padding: 0.5rem 1rem;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
         }
 
-        button[type='submit']:hover {
-            background-color: #0050a6;
+        .btn-secondary {
+            background-color: #eee;
+            color: #333;
+
+            &:hover {
+                background-color: #ccc;
+            }
         }
+
+        .btn-danger {
+            background-color: #ff5252;
+            color: #fff;
+
+            &:hover {
+                background-color: #ff1744;
+            }
+        }
+
+        .btn-primary {
+            background-color: #8c4bff;
+            color: #fff;
+
+            &:hover {
+                background-color: #7239d9;
+            }
+        }
+    }
+
+    .error-message {
+        text-align: center;
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.25rem;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        border: 2px solid #c62828;
     }
 }
