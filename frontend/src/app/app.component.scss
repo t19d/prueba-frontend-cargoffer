@@ -4,22 +4,75 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+
+    & > nav {
+        width: 100%;
+
+        & > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & > li {
+                margin: 0;
+
+                & > a {
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1.2em;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                & > button {
+                    background-color: transparent;
+                    color: white;
+                    border: 1px solid white;
+                    border-radius: 5px;
+                    padding: 0.5rem 1.5rem;
+                    cursor: pointer;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        background-color: white;
+                        color: #333;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                        border-color: transparent;
+                    }
+
+                    &.logout {
+                        background-color: white;
+                        color: #333;
+
+                        &:hover {
+                            background-color: #ff0000;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+main {
+    flex: 1;
+}
+
+footer {
     display: flex;
-    gap: 20px;
-}
-
-nav a {
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
     color: white;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
+    position: sticky;
+    bottom: 0;
 }

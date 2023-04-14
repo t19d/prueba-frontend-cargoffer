@@ -1,15 +1,37 @@
-<header>
-    <nav>
+<header role="banner">
+    <nav role="navigation" aria-label="Main menu">
         <ul>
             <li>
-                <a routerLink="/products" routerLinkActive="active">Products</a>
+                <a
+                    routerLink="/products"
+                    routerLinkActive="active"
+                    aria-label="Go to Products page"
+                    aria-current="page"
+                    >Products</a
+                >
             </li>
             <li *ngIf="isLoggedIn$ | async; else loginLink">
-                <button (click)="onLogout()">Logout</button>
+                <button
+                    class="logout"
+                    (click)="onLogout()"
+                    aria-label="Logout"
+                    tabindex="0"
+                    title="Log out"
+                >
+                    Logout
+                </button>
             </li>
             <ng-template #loginLink>
                 <li>
-                    <a routerLink="/login" routerLinkActive="active">Login</a>
+                    <button
+                        routerLink="/login"
+                        routerLinkActive="active"
+                        aria-label="Go to Login page"
+                        tabindex="0"
+                        title="Log in"
+                    >
+                        Login
+                    </button>
                 </li>
             </ng-template>
         </ul>
