@@ -2,7 +2,7 @@
 
 <section class="product-details" *ngIf="product && !editMode">
     <div class="product-img">
-        <img [src]="product.image" alt="{{ product.name }} image" />
+        <img [src]="getImage()" alt="{{ product.name }} image" />
     </div>
 
     <div class="product-info">

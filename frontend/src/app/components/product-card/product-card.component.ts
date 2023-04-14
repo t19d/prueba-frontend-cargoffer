@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { getSafeImage } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-card',
@@ -17,5 +18,9 @@ export class ProductCardComponent {
     if (!productId) return;
     const sanitizedProductId = this.sanitizer.sanitize(4, productId.trim());
     this.router.navigate(['/products', sanitizedProductId]);
+  }
+
+  getImage(): SafeUrl {
+    return getSafeImage(this.sanitizer, this.product?.image ?? '');
   }
 }

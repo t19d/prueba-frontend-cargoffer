@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { sanitizeProduct } from 'src/app/utils/utils';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { getSafeImage, sanitizeProduct } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-details',
@@ -38,6 +38,10 @@ export class ProductDetailsComponent implements OnInit {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.isUserLoggedIn = isLoggedIn;
     });
+  }
+
+  getImage(): SafeUrl {
+    return getSafeImage(this.sanitizer, this.product?.image ?? '');
   }
 
   enableEditMode(): void {
