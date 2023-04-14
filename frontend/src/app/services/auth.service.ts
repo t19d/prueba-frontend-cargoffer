@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthService {
   private baseUrl = 'http://127.0.0.1:3000/users';
 
-  private loggedInUser: string | null = null;
+  private loggedInUser$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class AuthService {
         map(response => {
           if (response && response.accessToken) {
             localStorage.setItem('currentUser', JSON.stringify({ username: username, token: response.accessToken }));
-            this.loggedInUser = username;
+            this.loggedInUser$.next(true);
             return true;
           } else {
             return false;
@@ -34,11 +34,11 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('currentUser');
-    this.loggedInUser = null;
+    this.loggedInUser$.next(false);
   }
 
-  isLoggedIn(): boolean {
-    return (this.loggedInUser !== null || this.getToken() !== null);
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedInUser$.asObservable();
   }
 
   getToken(): string | null {
