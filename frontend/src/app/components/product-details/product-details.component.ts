@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { sanitizeProduct } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
   ) {
     this.getProduct();
   }
@@ -46,10 +49,20 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   saveChanges(product: Product): void {
-    this.productService.updateProduct(product._id || '', product)?.subscribe((product: Product) => {
+    const sanitizedProduct = sanitizeProduct(this.sanitizer, product);
+
+    if (
+      !sanitizedProduct.name.trim() ||
+      !sanitizedProduct.description.trim() ||
+      sanitizedProduct.stock < 0 ||
+      sanitizedProduct.price < 0
+    ) {
+      return;
+    }
+
+    this.productService.updateProduct(sanitizedProduct._id || '', sanitizedProduct)?.subscribe((product: Product) => {
       this.product = product;
       this.disableEditMode();
     });
   }
-
 }
