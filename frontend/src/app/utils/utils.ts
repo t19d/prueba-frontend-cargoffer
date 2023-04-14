@@ -1,5 +1,6 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { Product } from '../models/product';
+import { SecurityContext } from '@angular/core';
 
 export function sanitizeProduct(sanitizer: DomSanitizer, product: Product): Product {
   const sanitizedProduct: Product = Object.assign({}, product);
@@ -12,4 +13,10 @@ export function sanitizeProduct(sanitizer: DomSanitizer, product: Product): Prod
   sanitizedProduct.material = sanitizer.sanitize(4, product.material!.trim()) ?? undefined;
   sanitizedProduct.brand = sanitizer.sanitize(4, product.brand!.trim()) ?? undefined;
   return sanitizedProduct;
+}
+
+export function sanitizeInput(sanitizer: DomSanitizer, input: string): string {
+  input = input.trim();
+  input = sanitizer.sanitize(SecurityContext.HTML, input) ?? '';
+  return input;
 }
