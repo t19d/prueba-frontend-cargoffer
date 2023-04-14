@@ -4,28 +4,16 @@
         [(ngModel)]="searchTerm"
         placeholder="Search"
         aria-label="Search product"
+        aria-describedby="search-create-container"
         (keyup.enter)="searchProducts()"
     />
-    <button (click)="searchProducts()">Search</button>
+    <button class="btn-primary" (click)="searchProducts()">Search</button>
 </div>
 
-<div class="button-container">
-    <button routerLink="/products/create">Create Product</button>
-</div>
-
-<div class="product-grid">
-    <div
-        class="product-card"
+<div class="product-grid" role="list">
+    <app-product-card
         *ngFor="let product of products"
-        (click)="goToProductDetails(product._id)"
-        routerLinkActive="active"
-    >
-        <img
-            class="product-image"
-            [src]="product.image"
-            alt="{{ product.name }}"
-        />
-        <div class="product-name">{{ product.name }}</div>
-        <div class="product-price">{{ product.price | currency }}</div>
-    </div>
+        [product]="product"
+        role="listitem"
+    ></app-product-card>
 </div>

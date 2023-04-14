@@ -30,11 +30,6 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  goToProductDetails(productId: string | null | undefined) {
-    if (!productId) return;
-    this.router.navigate(['/products', productId]);
-  }
-
   searchProducts(): void {
     this.getProducts();
   }
