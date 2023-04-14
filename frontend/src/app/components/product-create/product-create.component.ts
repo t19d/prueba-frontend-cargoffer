@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { sanitizeProduct } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-create',
@@ -12,17 +14,28 @@ export class ProductCreateComponent {
 
   constructor(
     private productService: ProductService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) { }
 
   saveChanges(product: Product): void {
-    this.productService.createProduct(product)?.subscribe(() => {
+    const sanitizedProduct = sanitizeProduct(this.sanitizer, product);
+
+    if (
+      !sanitizedProduct.name.trim() ||
+      !sanitizedProduct.description.trim() ||
+      sanitizedProduct.stock < 0 ||
+      sanitizedProduct.price < 0
+    ) {
+      return;
+    }
+
+    this.productService.createProduct(sanitizedProduct)?.subscribe(() => {
       this.redirectToProducts();
     });
   }
 
-  cancelChanges() {
+  cancelChanges(): void {
     this.redirectToProducts();
   }
 
