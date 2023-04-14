@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
+import { sanitizeInput } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +13,19 @@ export class AuthService {
 
   private loggedInUser$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     this.checkLoggedInStatus();
   }
 
   login(username: string, password: string): Observable<boolean> {
+    const sanitizedUsername = sanitizeInput(this.sanitizer, username);
+    const sanitizedPassword = sanitizeInput(this.sanitizer, password);
 
-    return this.http.post<any>(`${this.baseUrl}/login`, { username: username, password: password })
+    return this.http.post<any>(`${this.baseUrl}/login`, { username: sanitizedUsername, password: sanitizedPassword })
       .pipe(
         map(response => {
           if (response && response.accessToken) {
-            localStorage.setItem('currentUser', JSON.stringify({ username: username, token: response.accessToken }));
+            localStorage.setItem('currentUser', JSON.stringify({ username: sanitizedUsername, token: response.accessToken }));
             this.loggedInUser$.next(true);
             return true;
           } else {
@@ -54,5 +58,4 @@ export class AuthService {
       this.loggedInUser$.next(true);
     }
   }
-
 }
