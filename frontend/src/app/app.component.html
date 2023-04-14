@@ -9,6 +9,14 @@
                     aria-current="page"
                     >Products</a
                 >
+                <a
+                    *ngIf="isLoggedIn$ | async"
+                    routerLink="/products/create"
+                    routerLinkActive="active"
+                    aria-label="Go to Create Product page"
+                    aria-current="page"
+                    >Create product</a
+                >
             </li>
             <li *ngIf="isLoggedIn$ | async; else loginLink">
                 <button
