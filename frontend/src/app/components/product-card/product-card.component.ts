@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-card',
@@ -10,10 +11,11 @@ import { Product } from 'src/app/models/product';
 export class ProductCardComponent {
   @Input() product: Product | undefined;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private sanitizer: DomSanitizer) { }
 
   goToProductDetails(productId: string | null | undefined) {
     if (!productId) return;
-    this.router.navigate(['/products', productId]);
+    const sanitizedProductId = this.sanitizer.sanitize(4, productId.trim());
+    this.router.navigate(['/products', sanitizedProductId]);
   }
 }
