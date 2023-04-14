@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/products" routerLinkActive="active">Products</a>
+            </li>
+            <li *ngIf="isLoggedIn$ | async; else loginLink">
+                <button (click)="onLogout()">Logout</button>
+            </li>
+            <ng-template #loginLink>
+                <li>
+                    <a routerLink="/login" routerLinkActive="active">Login</a>
+                </li>
+            </ng-template>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2023 My Awesome Store</p>
+</footer>
