@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { sanitizeInput } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-product-list',
@@ -12,15 +13,16 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   searchTerm: string = '';
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.getProducts();
   }
 
   getProducts(): void {
-    if (this.searchTerm) {
-      this.productService.searchProducts(this.searchTerm).subscribe((data: Product[]) => {
+    const sanitizedSearchTerm = sanitizeInput(this.sanitizer, this.searchTerm);
+    if (sanitizedSearchTerm) {
+      this.productService.searchProducts(sanitizedSearchTerm).subscribe((data: Product[]) => {
         this.products = data;
       });
     } else {
@@ -33,5 +35,4 @@ export class ProductListComponent implements OnInit {
   searchProducts(): void {
     this.getProducts();
   }
-
 }
