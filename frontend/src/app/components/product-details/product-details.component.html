@@ -1,30 +1,69 @@
 <h1>{{ product?.name }}</h1>
 
-<div *ngIf="product && !editMode">
-    <img [src]="product.image" alt="{{ product.name }} image" />
-    <p>{{ product.description }}</p>
-    <p>Price: {{ product.price | currency }}</p>
-    <p>Category: {{ product.category }}</p>
-    <p>Size: {{ product.size }}</p>
-    <p>Color: {{ product.color }}</p>
-    <p>Material: {{ product.material }}</p>
-    <p>Brand: {{ product.brand }}</p>
-    <p>Stock: {{ product.stock }}</p>
-    <button
-        (click)="enableEditMode()"
-        [disabled]="!isUserLoggedIn"
-        aria-label="Edit product"
-        [title]="isUserLoggedIn ? '' : 'You need to sign in to edit'"
-    >
-        Edit
-    </button>
-</div>
+<section class="product-details" *ngIf="product && !editMode">
+    <div class="product-img">
+        <img [src]="product.image" alt="{{ product.name }} image" />
+    </div>
 
-<div *ngIf="product && editMode">
+    <div class="product-info">
+        <div class="product-attr">
+            <div>
+                <span>Name</span>
+                <span class="name">{{ product.name }}</span>
+            </div>
+            <div>
+                <span>Description</span>
+                <span class="description">{{ product.description }}</span>
+            </div>
+            <div>
+                <span>Price</span>
+                <span class="price">{{ product.price | currency }}</span>
+            </div>
+            <div>
+                <span>Stock</span>
+                <span class="stock">{{ product.stock }}</span>
+            </div>
+            <div>
+                <span>Category</span>
+                <span class="category">{{ product.category }}</span>
+            </div>
+            <div>
+                <span>Size</span>
+                <span class="size">{{ product.size }}</span>
+            </div>
+            <div>
+                <span>Color</span>
+                <span class="color">{{ product.color }}</span>
+            </div>
+            <div>
+                <span>Material</span>
+                <span class="material">{{ product.material }}</span>
+            </div>
+            <div>
+                <span>Brand</span>
+                <span class="brand">{{ product.brand }}</span>
+            </div>
+        </div>
+
+        <button
+            id="editButton"
+            (click)="enableEditMode()"
+            [disabled]="!isUserLoggedIn"
+            aria-label="Edit product"
+            [title]="isUserLoggedIn ? '' : 'You need to sign in to edit'"
+            class="btn-primary"
+        >
+            <span aria-hidden="true">Edit</span>
+        </button>
+    </div>
+</section>
+
+<article *ngIf="product && editMode" class="edit-product">
     <app-product-form
         [product]="product"
         (onSave)="saveChanges($event)"
         (onCancel)="disableEditMode()"
         *ngIf="isUserLoggedIn"
+        role="form"
     ></app-product-form>
-</div>
+</article>
