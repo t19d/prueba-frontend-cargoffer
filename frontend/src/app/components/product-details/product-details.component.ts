@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,10 +13,12 @@ export class ProductDetailsComponent implements OnInit {
 
   product: Product | undefined;
   editMode: boolean = false;
+  isUserLoggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {
     this.getProduct();
   }
@@ -27,6 +30,10 @@ export class ProductDetailsComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.productService.getProductById(id)?.subscribe(product => {
       this.product = product;
+    });
+
+    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      this.isUserLoggedIn = isLoggedIn;
     });
   }
 
